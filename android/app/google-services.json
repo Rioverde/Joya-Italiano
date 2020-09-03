@@ -1,0 +1,32 @@
+{
+    "project_info": {
+        "project_number": "629571360511",
+        "firebase_url": "https://joya-italiano.firebaseio.com",
+        "project_id": "joya-italiano",
+        "storage_bucket": "joya-italiano.appspot.com"
+    },
+    "client": [{
+        "client_info": {
+            "mobilesdk_app_id": "1:629571360511:android:0ae4d1590a69f706f79eca",
+            "android_client_info": {
+                "package_name": "com.example.joya_italiano"
+            }
+        },
+        "oauth_client": [{
+            "client_id": "629571360511-3viou1fl49mcfa3o3q3kor373korses2.apps.googleusercontent.com",
+            "client_type": 3
+        }],
+        "api_key": [{
+            "current_key": "AIzaSyAZJ-1NOun7Y0dbt9-2_OYK8gyq2cvuiLQ"
+        }],
+        "services": {
+            "appinvite_service": {
+                "other_platform_oauth_client": [{
+                    "client_id": "629571360511-3viou1fl49mcfa3o3q3kor373korses2.apps.googleusercontent.com",
+                    "client_type": 3
+                }]
+            }
+        }
+    }],
+    "configuration_version": "1"
+}
