@@ -1,4 +1,4 @@
-# joya_italiano
+# Joya Italiano
 
 A new Flutter project.
 
