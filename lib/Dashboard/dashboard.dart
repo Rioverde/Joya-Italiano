@@ -18,6 +18,7 @@ String name = '';
 String month;
 String day;
 int number = 0;
+String phone = '';
 
 class CustomerDashboard extends StatefulWidget {
   @override
@@ -214,6 +215,10 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
             SizedBox(
               height: 24,
             ),
+            enterPhoneField(),
+            SizedBox(
+              height: 24,
+            ),
             RaisedButton(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5.0)),
@@ -350,7 +355,7 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
               if (_formKey.currentState.validate()) {
                 var firebaseUser = await FirebaseAuth.instance.currentUser();
                 await DatabaseService(uid: firebaseUser.uid)
-                    .updateUserData(name, false, _date, _time, number);
+                    .updateUserData(name, false, _date, _time, number, phone);
                 setState(() {});
               } else
                 print('Error in update');
@@ -406,7 +411,27 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
     );
   }
 
+  TextFormField enterPhoneField() {
+    return TextFormField(
+      validator: (value) => validatePhoneCases(value),
+      onChanged: (val) {
+        setState(() => phone = (val));
+        print(phone);
+      },
+      obscureText: false,
+      decoration: InputDecoration(
+        hintText: "Enter your phone number",
+        prefixIcon: Icon(
+          Icons.call,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+
   Padding confirmButton(String text, Function pressed) {
+    print(number);
+    print(phone);
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
       child: ButtonTheme(

@@ -4,9 +4,10 @@ import 'dart:ui';
 import 'package:flutter/services.dart';
 
 import 'package:flutter/material.dart';
-import 'package:google_map_polyline/google_map_polyline.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+
+GoogleMapController gmapController;
 
 class ShowLocation extends StatefulWidget {
   @override
@@ -16,7 +17,6 @@ class ShowLocation extends StatefulWidget {
 class _ShowLocation extends State<ShowLocation> {
   Set<Marker> _markers = HashSet<Marker>();
 
-  GoogleMapController _mapController;
   BitmapDescriptor _markerIcon;
 
   void _getLocationPermission() async {
@@ -48,7 +48,7 @@ class _ShowLocation extends State<ShowLocation> {
   }
 
   void _onMapCreated(GoogleMapController controller) {
-    _mapController = controller;
+    gmapController = controller;
 
     setState(() {
       _markers.add(

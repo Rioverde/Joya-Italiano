@@ -1,5 +1,5 @@
 import 'dart:math';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'package:Joya_Italiano/Models/userData.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +9,7 @@ class UsersTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(users.phone);
     Color randomColor =
         Colors.primaries[Random().nextInt(Colors.primaries.length)];
 
@@ -30,7 +31,17 @@ class UsersTile extends StatelessWidget {
                   radius: 25,
                   backgroundColor: randomColor,
                 ),
-                title: Text(users.name),
+                title: Row(
+                  children: [
+                    Text(users.name),
+                    Spacer(),
+                    IconButton(
+                        icon: Icon(Icons.phone_forwarded),
+                        iconSize: 24,
+                        color: randomColor,
+                        onPressed: () => launch("tel:" + users.phone))
+                  ],
+                ),
                 subtitle: Row(
                   children: [
                     Text(users.date),

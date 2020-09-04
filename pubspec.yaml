@@ -44,6 +44,7 @@ dependencies:
   google_map_polyline:
   permission: ^0.1.7
   location: ^3.0.0
+  url_launcher: ^5.5.2
 
 dev_dependencies:
   flutter_test:

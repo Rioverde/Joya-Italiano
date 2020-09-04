@@ -40,9 +40,20 @@ String validateNameCases(String value) {
 String validateNumberCases(int value) {
   Pattern pattern = r"^[0-9]*$";
   RegExp regex = new RegExp(pattern);
-  if (value == 0) {
+  if (value == null || value.toString().isEmpty) {
     return "Number should not be empty";
   } else if (!regex.hasMatch(value.toString())) {
+    return "Use only numbers";
+  } else
+    return null;
+}
+
+String validatePhoneCases(String value) {
+  Pattern pattern = r"^[0-9]*$";
+  RegExp regex = new RegExp(pattern);
+  if (value.isEmpty) {
+    return "Number should not be empty";
+  } else if (!regex.hasMatch(value)) {
     return "Use only numbers";
   } else
     return null;

@@ -9,14 +9,15 @@ class DatabaseService {
   final CollectionReference userCollection =
       Firestore.instance.collection('Users');
 
-  Future<void> updateUserData(
-      String name, bool admin, String date, String time, int number) async {
+  Future<void> updateUserData(String name, bool admin, String date, String time,
+      int number, String phone) async {
     return await userCollection.document(uid).setData({
       'name': name,
       'admin': admin,
       'date': date,
       'time': time,
       'number': number,
+      'phone': phone,
     });
   }
 
@@ -31,7 +32,8 @@ class DatabaseService {
         admin: doc.data[false] ?? false,
         date: doc.data['date'] ?? '00-00-00',
         time: doc.data['time'] ?? '00:00',
-        number: doc.data['number'] ?? 0,
+        number: doc.data['number'] ?? 1,
+        phone: doc.data['phone'] ?? 0,
       );
     }).toList();
   }
