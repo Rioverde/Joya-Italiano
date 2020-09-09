@@ -6,6 +6,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../../main.dart';
 
+String fcm_token = '';
+
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -18,6 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     firebaseMessaging.getToken().then((token) {
       print('FCM Token: $token');
+      fcm_token = token;
     });
     super.initState();
     Future.delayed(const Duration(milliseconds: 2000), () {

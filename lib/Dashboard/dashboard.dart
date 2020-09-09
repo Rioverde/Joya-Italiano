@@ -2,6 +2,7 @@ import 'package:Joya_Italiano/Database/database.dart';
 import 'package:Joya_Italiano/Maps/showLocation.dart';
 import 'package:Joya_Italiano/Models/user.dart';
 import 'package:Joya_Italiano/Models/userData.dart';
+import 'package:Joya_Italiano/Screens/Initial/splashScreen.dart';
 import 'package:Joya_Italiano/Services/AuthServices.dart';
 import 'package:Joya_Italiano/Services/regexValidation.dart';
 
@@ -354,8 +355,8 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
             confirmButton("Confirm", () async {
               if (_formKey.currentState.validate()) {
                 var firebaseUser = await FirebaseAuth.instance.currentUser();
-                await DatabaseService(uid: firebaseUser.uid)
-                    .updateUserData(name, false, _date, _time, number, phone);
+                await DatabaseService(uid: firebaseUser.uid).updateUserData(
+                    name, false, _date, _time, number, fcm_token, phone);
                 setState(() {});
               } else
                 print('Error in update');

@@ -6,6 +6,7 @@ class UserData {
   final String time;
   final int number;
   final String phone;
+  final String token;
 
   UserData(
       {this.uid,
@@ -14,5 +15,6 @@ class UserData {
       this.date,
       this.time,
       this.number,
+      this.token,
       this.phone});
 }

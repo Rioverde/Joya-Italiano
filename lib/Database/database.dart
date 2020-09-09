@@ -10,13 +10,14 @@ class DatabaseService {
       Firestore.instance.collection('Users');
 
   Future<void> updateUserData(String name, bool admin, String date, String time,
-      int number, String phone) async {
+      int number, String token, String phone) async {
     return await userCollection.document(uid).setData({
       'name': name,
       'admin': admin,
       'date': date,
       'time': time,
       'number': number,
+      'token': token,
       'phone': phone,
     });
   }
@@ -28,12 +29,13 @@ class DatabaseService {
   List<UserData> userDataFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return UserData(
-        name: doc.data['name'] ?? ' ',
+        name: doc.data['name'] ?? '',
         admin: doc.data[false] ?? false,
         date: doc.data['date'] ?? '00-00-00',
         time: doc.data['time'] ?? '00:00',
         number: doc.data['number'] ?? 1,
         phone: doc.data['phone'] ?? 0,
+        token: doc.data['token'] ?? '',
       );
     }).toList();
   }
@@ -50,6 +52,7 @@ class DatabaseService {
         name: snapshot.data['name'],
         date: snapshot.data['date'],
         time: snapshot.data['time'],
+        token: snapshot.data['token'],
         number: snapshot.data['number']);
   }
 
