@@ -21,7 +21,12 @@ String month;
 String day;
 int number = 0;
 String phone = '';
-bool generateQR = false;
+
+Image img = Image.asset(
+  "assets/logoB.png",
+  scale: 1.5,
+);
+ImageProvider imageProvider = img.image;
 
 class CustomerDashboard extends StatefulWidget {
   @override
@@ -89,7 +94,10 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
                 buildReservationBox(),
                 divider(),
                 reservationBox(),
-                generateQR ? qrbox() : SizedBox(),
+                SizedBox(
+                  height: 18,
+                ),
+                qrbox(),
               ],
             ),
           )),
@@ -98,27 +106,39 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
     );
   }
 
-  Container qrbox() {
-    return Container(
-        alignment: Alignment.center,
-        child: QrImage(
-          backgroundColor: Colors.white,
-          data: "Name is : " +
-              name +
-              "\n" +
-              "Reservation Data : " +
-              _date +
-              " at " +
-              _time +
-              "\n" +
-              " Phone number is : " +
-              phone +
-              "\n" +
-              "Number of people : " +
-              number.toString(),
-          version: QrVersions.auto,
-          size: 200.0,
-        ));
+  StreamBuilder qrbox() {
+    User user = Provider.of<User>(context);
+    return StreamBuilder<UserData>(
+        stream: DatabaseService(uid: user.uid).userData,
+        builder: (context, snapshot) {
+          UserData userData = snapshot.data;
+          if (snapshot.hasData) {
+            return Container(
+                alignment: Alignment.center,
+                child: QrImage(
+                  embeddedImage: imageProvider,
+                  backgroundColor: Colors.white,
+                  data: "Name is : " +
+                      userData.name +
+                      "\n" +
+                      "Reservation Date and Time : " +
+                      userData.date +
+                      " at " +
+                      userData.time +
+                      "\n" +
+                      "Phone number is : " +
+                      userData.time +
+                      "\n" +
+                      "Number of people : " +
+                      userData.number.toString(),
+                  version: QrVersions.auto,
+                  size: 200.0,
+                ));
+          } else
+            return SizedBox(
+              height: 24,
+            );
+        });
   }
 
   StreamBuilder reservationBox() {
@@ -180,9 +200,7 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
                             icon: Icon(Icons.delete),
                             color: Colors.black,
                             onPressed: () async {
-                              setState(() {
-                                generateQR = false;
-                              });
+                              setState(() {});
 
                               await DatabaseService(uid: user.uid)
                                   .deleteUserData();
@@ -387,9 +405,7 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
                 var firebaseUser = await FirebaseAuth.instance.currentUser();
                 await DatabaseService(uid: firebaseUser.uid).updateUserData(
                     name, false, _date, _time, number, fcm_token, phone);
-                setState(() {
-                  generateQR = true;
-                });
+                setState(() {});
               } else
                 print('Error in update');
             }),
