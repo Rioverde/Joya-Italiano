@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import '../theme.dart';
 
@@ -20,6 +21,7 @@ String month;
 String day;
 int number = 0;
 String phone = '';
+bool generateQR = false;
 
 class CustomerDashboard extends StatefulWidget {
   @override
@@ -87,12 +89,36 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
                 buildReservationBox(),
                 divider(),
                 reservationBox(),
+                generateQR ? qrbox() : SizedBox(),
               ],
             ),
           )),
         ),
       ),
     );
+  }
+
+  Container qrbox() {
+    return Container(
+        alignment: Alignment.center,
+        child: QrImage(
+          backgroundColor: Colors.white,
+          data: "Name is : " +
+              name +
+              "\n" +
+              "Reservation Data : " +
+              _date +
+              " at " +
+              _time +
+              "\n" +
+              " Phone number is : " +
+              phone +
+              "\n" +
+              "Number of people : " +
+              number.toString(),
+          version: QrVersions.auto,
+          size: 200.0,
+        ));
   }
 
   StreamBuilder reservationBox() {
@@ -154,6 +180,10 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
                             icon: Icon(Icons.delete),
                             color: Colors.black,
                             onPressed: () async {
+                              setState(() {
+                                generateQR = false;
+                              });
+
                               await DatabaseService(uid: user.uid)
                                   .deleteUserData();
                             })),
@@ -357,7 +387,9 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
                 var firebaseUser = await FirebaseAuth.instance.currentUser();
                 await DatabaseService(uid: firebaseUser.uid).updateUserData(
                     name, false, _date, _time, number, fcm_token, phone);
-                setState(() {});
+                setState(() {
+                  generateQR = true;
+                });
               } else
                 print('Error in update');
             }),
