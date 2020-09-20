@@ -49,12 +49,13 @@ String validateNumberCases(int value) {
 }
 
 String validatePhoneCases(String value) {
-  Pattern pattern = r"^[0-9]*$";
+  Pattern pattern =
+      r"^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$";
   RegExp regex = new RegExp(pattern);
   if (value.isEmpty) {
     return "Number should not be empty";
   } else if (!regex.hasMatch(value)) {
-    return "Use only numbers";
+    return "Use valid number";
   } else
     return null;
 }
