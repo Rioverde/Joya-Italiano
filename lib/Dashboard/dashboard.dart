@@ -33,23 +33,6 @@ class CustomerDashboard extends StatefulWidget {
   _CustomerDashboardState createState() => _CustomerDashboardState();
 }
 
-// final users = Provider.of<List<UserData>>(context);
-// users.forEach((users) {
-//   print(name);
-//   if (users.name == name) {
-//     setState(()   {
-//       print(users.name);
-//       username = users.name;
-//       print(users.date);
-//       tempDate = users.date;
-//       print(users.time);
-//       tempTime = users.time;
-//     });
-//   } else {
-//     print('error in users');
-//   }
-// });
-
 class _CustomerDashboardState extends State<CustomerDashboard> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
